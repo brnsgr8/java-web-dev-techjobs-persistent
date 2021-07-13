@@ -1,21 +1,26 @@
 package org.launchcode.javawebdevtechjobspersistent.models;
 
+
+import javax.persistence.*;
+import javax.validation.Valid;
+import javax.validation.constraints.NotNull;
+import java.util.ArrayList;
+import java.util.List;
+
+
 import javax.persistence.*;
 
 @Entity
-public class Job{
+public class Job extends AbstractEntity{
 
-    @Id
-    @GeneratedValue
-    private int id;
+//    private int id;
 
-    private String name;
+//    private String name;
 
     private String employer;
     private String skills;
 
-    public Job() {
-    }
+    public Job() {}
 
     public Job(String anEmployer, String someSkills) {
         super();
@@ -25,13 +30,13 @@ public class Job{
 
     // Getters and setters.
 
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
+//    public String getName() {
+//        return name;
+//    }
+//
+//    public void setName(String name) {
+//        this.name = name;
+//    }
 
     public String getEmployer() {
         return employer;
