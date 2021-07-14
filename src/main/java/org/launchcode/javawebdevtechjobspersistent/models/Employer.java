@@ -2,7 +2,6 @@ package org.launchcode.javawebdevtechjobspersistent.models;
 
 import javax.persistence.Entity;
 import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.validation.Valid;
 import javax.validation.constraints.NotBlank;
@@ -14,23 +13,19 @@ import java.util.List;
 public class Employer extends AbstractEntity {
 
 
-    public Employer() { }
+//    public Employer() { }
 
     @NotBlank
     @Size(max=50)
      private String location;
 
-    public List<Job> getJobs() {
-        return jobs;
-    }
-
-
-    public Employer(String location) {
-        this.location = location;
-    }
     @OneToMany
     @JoinColumn(name = "employer_id")
     private final List<Job> jobs = new ArrayList<>();
+
+    public Employer(){
+        this.location = location;
+    }
 
     @Valid
     public String getLocation() {
@@ -41,4 +36,8 @@ public class Employer extends AbstractEntity {
         this.location = location;
     }
 
- }
+    public List<Job> getJobs() {
+        return jobs;
+    }
+
+   }

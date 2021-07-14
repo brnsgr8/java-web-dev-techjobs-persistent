@@ -19,7 +19,7 @@ import static org.launchcode.javawebdevtechjobspersistent.controllers.ListContro
 public class SearchController {
 
     @Autowired
-    private JobRepository jobRepository;
+    private JobRepository jobPRepository;
 
     @RequestMapping("")
     public String search(Model model) {
@@ -31,9 +31,9 @@ public class SearchController {
     public String displaySearchResults(Model model, @RequestParam String searchType, @RequestParam String searchTerm){
         Iterable<Job> jobs;
         if (searchTerm.toLowerCase().equals("all") || searchTerm.equals("")){
-            jobs = jobRepository.findAll();
+            jobs = jobPRepository.findAll();
         } else {
-            jobs = JobData.findByColumnAndValue(searchType, searchTerm, jobRepository.findAll());
+            jobs = JobData.findByColumnAndValue(searchType, searchTerm, jobPRepository.findAll());
         }
         model.addAttribute("columns", columnChoices);
         model.addAttribute("title", "Jobs with " + columnChoices.get(searchType) + ": " + searchTerm);

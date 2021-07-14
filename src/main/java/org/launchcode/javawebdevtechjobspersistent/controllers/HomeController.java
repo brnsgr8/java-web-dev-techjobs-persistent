@@ -37,7 +37,7 @@ public class HomeController {
     public String index(Model model) {
 
         model.addAttribute("title", "My Jobs");
-
+        model.addAttribute("jobs", jobPRepository.findAll());
         return "index";
     }
 
@@ -51,34 +51,37 @@ public class HomeController {
         return "add";
     }
 
-    @PostMapping("add")
-    public String processAddJobForm(@ModelAttribute @Valid Job newJob,
-                                       Errors errors, Model model, @RequestParam int employerId, @RequestParam List<Integer> skills) {
 
-        if (errors.hasErrors()) {
-            return "add";
-        }
-        Employer employer = employerRepository.findById(employerId).orElse(new Employer());
-        newJob.setEmployer(employer);
+@PostMapping("add")
+public String processAddJobForm(@ModelAttribute @Valid Job newJob, Errors errors, Model model, @RequestParam int employerId, @RequestParam List<Integer> skills) {
 
-        List<Skill> skillsObj = (List<Skill>) skillRepository.findAllById(skills);
-        newJob.setSkills(skillsObj);
-        jobPRepository.save(newJob);
-        return "redirect:";
+    if (errors.hasErrors()) {
+        model.addAttribute("title", "Add Job");
+        model.addAttribute("employers", employerRepository.findAll());
+        model.addAttribute("skills", skillRepository.findAll());
+        return "add";
     }
+    Employer employer = employerRepository.findById(employerId).get();
+    List<Skill> skillObjs = (List<Skill>) skillRepository.findAllById(skills);
+    newJob.setEmployer(employer);
+    newJob.setSkills(skillObjs);
 
+    jobPRepository.save(newJob);
+    model.addAttribute("job", jobPRepository.findAll());
+    return "redirect:";
+
+}
     @GetMapping("view/{jobId}")
     public String displayViewJob(Model model, @PathVariable int jobId) {
 
         Optional<Job> optJob = jobPRepository.findById(jobId);
-        Job job = optJob.get();
+        if (optJob.isPresent()) {
+            Job job = (Job) optJob.get();
+            model.addAttribute("job", job);
+            return "view";
+        } else {
 
-        model.addAttribute("job", job);
-
-
-        return "view";
+            return "redirect:../";
+        }
     }
-
-
-
 }

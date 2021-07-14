@@ -22,7 +22,7 @@ import java.util.HashMap;
 public class ListController {
 
      @Autowired
-    private JobRepository jobRepository;
+    private JobRepository jobPRepository;
 
     @Autowired
     private EmployerRepository employerRepository;
@@ -51,10 +51,10 @@ public class ListController {
     public String listJobsByColumnAndValue(Model model, @RequestParam String column, @RequestParam String value) {
         Iterable<Job> jobs;
         if (column.toLowerCase().equals("all")){
-            jobs = jobRepository.findAll();
+            jobs = jobPRepository.findAll();
             model.addAttribute("title", "All Jobs");
         } else {
-            jobs = JobData.findByColumnAndValue(column, value, jobRepository.findAll());
+            jobs = JobData.findByColumnAndValue(column, value, jobPRepository.findAll());
             model.addAttribute("title", "Jobs with " + columnChoices.get(column) + ": " + value);
         }
         model.addAttribute("jobs", jobs);
