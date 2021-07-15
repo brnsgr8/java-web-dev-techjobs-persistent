@@ -16,12 +16,12 @@ public abstract class AbstractEntity {
     @GeneratedValue
     private int id;
 
-    @NotBlank(message = "Name is required")
-    @Size(min = 3, max = 150, message = "Name must be between 3 and 150 characters")
+    @NotBlank
+    @Size(min = 3, max = 150)
     private String name;
 
     public int getId() {
-        return id;
+         return id;
     }
 
     public String getName() {

@@ -19,6 +19,7 @@ public class Job extends AbstractEntity{
 //    private String name;
 @ManyToOne
 @JoinColumn
+@NotNull
     private Employer employer;
 
 @ManyToMany
