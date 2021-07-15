@@ -1,7 +1,7 @@
 package org.launchcode.javawebdevtechjobspersistent.models;
 
 
-import javax.persistence.*;
+import javax.persistence.Entity;
 import javax.validation.Valid;
 import javax.validation.constraints.NotNull;
 import java.util.ArrayList;
@@ -11,18 +11,22 @@ import java.util.List;
 import javax.persistence.*;
 
 @Entity
+//@Table(name="job")
 public class Job extends AbstractEntity{
 
 //    private int id;
 
 //    private String name;
+@ManyToOne
+@JoinColumn
+    private Employer employer;
 
-    private String employer;
-    private String skills;
+@ManyToMany
+private List<Skill> skills;
 
     public Job() {}
 
-    public Job(String anEmployer, String someSkills) {
+    public Job(Employer anEmployer, List<Skill> someSkills) {
         super();
         this.employer = anEmployer;
         this.skills = someSkills;
@@ -38,19 +42,19 @@ public class Job extends AbstractEntity{
 //        this.name = name;
 //    }
 
-    public String getEmployer() {
+    public Employer getEmployer() {
         return employer;
     }
 
-    public void setEmployer(String employer) {
+    public void setEmployer(Employer employer) {
         this.employer = employer;
     }
 
-    public String getSkills() {
+    public List<Skill> getSkills() {
         return skills;
     }
 
-    public void setSkills(String skills) {
+    public void setSkills(List<Skill> skills) {
         this.skills = skills;
     }
 }

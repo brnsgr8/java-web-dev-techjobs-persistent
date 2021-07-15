@@ -36,14 +36,14 @@ public class HomeController {
     @RequestMapping("")
     public String index(Model model) {
 
-        model.addAttribute("title", "My Jobs");
+//        model.addAttribute("title", "My Jobs");
         model.addAttribute("jobs", jobPRepository.findAll());
         return "index";
     }
 
     @GetMapping("add")
     public String displayAddJobForm(Model model) {
-        model.addAttribute("title", "Add Job");
+//        model.addAttribute("title", "Add Job");
         model.addAttribute("job", new Job());
         model.addAttribute("employers", employerRepository.findAll());
         model.addAttribute("skills", skillRepository.findAll());
@@ -56,18 +56,19 @@ public class HomeController {
 public String processAddJobForm(@ModelAttribute @Valid Job newJob, Errors errors, Model model, @RequestParam int employerId, @RequestParam List<Integer> skills) {
 
     if (errors.hasErrors()) {
-        model.addAttribute("title", "Add Job");
-        model.addAttribute("employers", employerRepository.findAll());
-        model.addAttribute("skills", skillRepository.findAll());
+//        model.addAttribute("title", "Add Job");
+//        model.addAttribute("employers", employerRepository.findAll());
+//        model.addAttribute("skills", skillRepository.findAll());
         return "add";
     }
-    Employer employer = employerRepository.findById(employerId).get();
+//    Employer employer = employerRepository.findById(employerId).get();
+    Employer employer = employerRepository.findById(employerId).orElse(new Employer());
     List<Skill> skillObjs = (List<Skill>) skillRepository.findAllById(skills);
     newJob.setEmployer(employer);
     newJob.setSkills(skillObjs);
 
     jobPRepository.save(newJob);
-    model.addAttribute("job", jobPRepository.findAll());
+//    model.addAttribute("job", jobPRepository.findAll());
     return "redirect:";
 
 }
@@ -80,8 +81,7 @@ public String processAddJobForm(@ModelAttribute @Valid Job newJob, Errors errors
             model.addAttribute("job", job);
             return "view";
         } else {
-
-            return "redirect:../";
+            return "redirect:/";
         }
     }
 }
