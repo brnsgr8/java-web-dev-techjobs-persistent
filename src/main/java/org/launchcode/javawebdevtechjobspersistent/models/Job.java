@@ -9,30 +9,25 @@ import java.util.List;
 
 import javax.persistence.*;
 
-@Entity
-//@Table(name="job")
-public class Job extends AbstractEntity{
+    @Entity
+    public class Job extends AbstractEntity{
 
-//    private int id;
-
-//    private String name;
-@ManyToOne
-//@JoinColumn
-@NotNull
+    @ManyToOne
     private Employer employer;
 
-@ManyToMany
-@NotNull
+    @ManyToMany
     private List<Skill> skills = new ArrayList<>();
 
     public Job() {}
 
-    public Job(Employer employer, List<Skill> skills) {
+    public Job(Employer employer) {
         super();
         this.employer = employer;
-        this.skills = skills;
     }
-
+//public Job(Employer employer) {
+//    super();
+//    this.employer = employer;
+//}
     // Getters and setters.
 
 //    public String getName() {

@@ -12,25 +12,21 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Entity
-//@Table(name="skill")
 public class Skill extends AbstractEntity {
 
     @NotBlank
-    @Size(max = 100)
+    @Size(min= 2, max = 100)
     private String description;
 
-    @ManyToMany
-    @NotNull
-    @JoinColumn(name = "skill_id")
+    @ManyToMany (mappedBy= "skills" )
     private List<Job> jobs = new ArrayList<>();
 
     public Skill() {
     }
-
     public Skill (String description){
-        this.description = description; }
+        this.description = description;
+    }
 
-    @Valid
     public String getDescription() { return description;  }
 
     public void setDescription(String description) {
@@ -39,5 +35,9 @@ public class Skill extends AbstractEntity {
 
     public List<Job> getJobs() {
         return jobs;
+    }
+
+    public void addJob (Job job){
+        this.jobs.add(job);
     }
 }
